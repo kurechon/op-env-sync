@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "op-env-sync": "./dist/bin/op-env-sync.js"
+    "op-env-sync": "dist/bin/op-env-sync.js"
   },
   "files": [
     "dist"
@@ -30,5 +30,13 @@
   },
   "engines": {
     "node": ">=18.0.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kurechon/op-env-sync.git"
+  },
+  "bugs": {
+    "url": "https://github.com/kurechon/op-env-sync/issues"
+  },
+  "homepage": "https://github.com/kurechon/op-env-sync#readme"
 }
