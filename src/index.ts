@@ -31,24 +31,23 @@ export async function syncEnv(
   if (mode === "push") {
     const envContent = await fs.readFile(envPath, "utf-8");
 
+    // Base64 encode to preserve line breaks
+    const encodedContent = Buffer.from(envContent).toString("base64");
+
     try {
-      const editCommand = `op item edit "${item}" --vault "${vault}" env[text]="${envContent.replace(
-        /"/g,
-        '\\"'
-      )}"`;
+      const editCommand = `op item edit "${item}" --vault "${vault}" env[text]="${encodedContent}"`;
       execSync(editCommand);
     } catch (error) {
-      const createCommand = `op item create --category "Secure Note" --title "${item}" --vault "${vault}" env[text]="${envContent.replace(
-        /"/g,
-        '\\"'
-      )}"`;
+      const createCommand = `op item create --category "Secure Note" --title "${item}" --vault "${vault}" env[text]="${encodedContent}"`;
       execSync(createCommand);
     }
     console.info("✅ Successfully saved .env file to 1Password");
   } else if (mode === "pull") {
     // Get and save .env from 1Password
     const command = `op item get "${item}" --vault "${vault}" --field env`;
-    const envContent = execSync(command).toString();
+    const encodedContent = execSync(command).toString();
+    // Base64デコードして元の内容を復元
+    const envContent = Buffer.from(encodedContent, "base64").toString("utf-8");
     await fs.writeFile(envPath, envContent);
     console.info("✅ Successfully pulled .env file from 1Password");
   }
