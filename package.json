@@ -1,0 +1,34 @@
+{
+  "name": "@kurechon/op-env-sync",
+  "version": "0.1.0",
+  "description": "Sync .env files with 1Password",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "op-env-sync": "./dist/bin/op-env-sync.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "prepublishOnly": "pnpm build"
+  },
+  "keywords": [
+    "1password",
+    "env",
+    "sync"
+  ],
+  "author": "kurechon",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^11.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
