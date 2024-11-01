@@ -1,6 +1,6 @@
 {
   "name": "@kurechon/op-env-sync",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Sync .env files with 1Password",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
