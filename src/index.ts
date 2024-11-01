@@ -16,16 +16,16 @@ export async function syncEnv(
   const itemPrefix = options.itemPrefix || "";
   const item = `${itemPrefix}[${rootDir}] .env`;
 
-  // 1Passwordにサインインしているか確認
+  // Check if signed in to 1Password
   try {
     execSync("op whoami", { stdio: "ignore" });
   } catch (error) {
-    console.error("❌ 1Passwordにサインインしていません。");
-    console.info("💡 `op signin` を実行してサインインしてください。");
+    console.error("❌ Not signed in to 1Password.");
+    console.info("💡 Please run `eval $(op signin)` to sign in.");
     process.exit(1);
   }
 
-  // .envファイルのパス
+  // Path to .env file
   const envPath = path.resolve(process.cwd(), ".env");
 
   if (mode === "push") {
@@ -44,12 +44,12 @@ export async function syncEnv(
       )}"`;
       execSync(createCommand);
     }
-    console.info("✅ .envファイルを1Passwordに保存しました");
+    console.info("✅ Successfully saved .env file to 1Password");
   } else if (mode === "pull") {
-    // 1Passwordから.envを取得して保存
+    // Get and save .env from 1Password
     const command = `op item get "${item}" --vault "${vault}" --field env`;
     const envContent = execSync(command).toString();
     await fs.writeFile(envPath, envContent);
-    console.info("✅ 1Passwordから.envファイルを取得しました");
+    console.info("✅ Successfully pulled .env file from 1Password");
   }
 }

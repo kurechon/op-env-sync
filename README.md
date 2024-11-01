@@ -25,17 +25,29 @@ op-env-sync pull
 ### Options
 
 ```bash
-# Specify vault
+# Specify vault (default: "Private")
 op-env-sync push --vault MyVault
 
 # Specify item prefix
-op-env-sync push --prefix "Project-"
+op-env-sync push --prefix "Local-"
 ```
 
 ## Prerequisites
 
 - 1Password CLI installed
-- Signed in to 1Password CLI (`op signin`)
+- Signed in to 1Password CLI
+  ```bash
+  eval $(op signin)
+  ```
+
+### Item Format in 1Password
+
+The .env file will be stored in 1Password with the following format:
+
+- Item Type: Secure Note
+- Item Name: `[current-directory-name] .env`
+  - With prefix option: `prefix[current-directory-name] .env`
+- Field Name: `env`
 
 ## License
 

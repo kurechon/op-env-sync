@@ -6,14 +6,14 @@ const program = new Command();
 
 program
   .name("op-env-sync")
-  .description("1Passwordと.envファイルを同期するCLIツール")
+  .description("CLI tool to sync .env files with 1Password")
   .version("0.1.0");
 
 program
   .command("push")
-  .description("ローカルの.envファイルを1Passwordに保存します")
-  .option("-v, --vault <vault>", "1Passwordのボールト名", "Private")
-  .option("-p, --prefix <prefix>", "アイテム名のプレフィックス", "")
+  .description("Save local .env file to 1Password")
+  .option("-v, --vault <vault>", "1Password vault name", "Private")
+  .option("-p, --prefix <prefix>", "Item name prefix", "")
   .action(async (options) => {
     try {
       await syncEnv("push", {
@@ -21,16 +21,16 @@ program
         itemPrefix: options.prefix,
       });
     } catch (error) {
-      console.error("❌ エラーが発生しました:", error);
+      console.error("❌ An error occurred:", error);
       process.exit(1);
     }
   });
 
 program
   .command("pull")
-  .description("1Passwordから.envファイルを取得します")
-  .option("-v, --vault <vault>", "1Passwordのボールト名", "Private")
-  .option("-p, --prefix <prefix>", "アイテム名のプレフィックス", "")
+  .description("Get .env file from 1Password")
+  .option("-v, --vault <vault>", "1Password vault name", "Private")
+  .option("-p, --prefix <prefix>", "Item name prefix", "")
   .action(async (options) => {
     try {
       await syncEnv("pull", {
@@ -38,7 +38,7 @@ program
         itemPrefix: options.prefix,
       });
     } catch (error) {
-      console.error("❌ エラーが発生しました:", error);
+      console.error("❌ An error occurred:", error);
       process.exit(1);
     }
   });
