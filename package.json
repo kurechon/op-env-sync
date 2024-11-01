@@ -12,7 +12,9 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublishOnly": "pnpm build"
+    "prepublishOnly": "pnpm build",
+    "clean": "rm -rf dist",
+    "dev-install": "echo '🧹 Cleaning...' && pnpm clean && echo '🔧 Building...' && pnpm build && echo '📦 Installing...' && pnpm add -g \"$PWD\" && echo '✅ Done!'"
   },
   "keywords": [
     "1password",
