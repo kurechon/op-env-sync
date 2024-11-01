@@ -14,7 +14,7 @@ export async function syncEnv(
   const vault = options.vault || "Private";
   const rootDir = path.basename(process.cwd());
   const itemSuffix = options.itemSuffix || "";
-  const item = `[${rootDir}]${itemSuffix} .env`;
+  const item = `[${rootDir}] .env${itemSuffix}`;
 
   // Check if signed in to 1Password
   try {

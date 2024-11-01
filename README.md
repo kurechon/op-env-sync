@@ -46,7 +46,7 @@ The .env file will be stored in 1Password with the following format:
 
 - Item Type: Secure Note
 - Item Name: `[current-directory-name].local .env`
-  - With suffix option: `[current-directory-name]<suffix> .env`
+  - With suffix option: `[current-directory-name] .env<suffix>`
 - Field Name: `env`
 
 ## License
