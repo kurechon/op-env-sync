@@ -13,12 +13,12 @@ program
   .command("push")
   .description("Save local .env file to 1Password")
   .option("-v, --vault <vault>", "1Password vault name", "Private")
-  .option("-p, --prefix <prefix>", "Item name prefix", "")
+  .option("-s, --suffix <suffix>", "Item name suffix", "")
   .action(async (options) => {
     try {
       await syncEnv("push", {
         vault: options.vault,
-        itemPrefix: options.prefix,
+        itemSuffix: options.suffix,
       });
     } catch (error) {
       console.error("❌ An error occurred:", error);
@@ -30,12 +30,12 @@ program
   .command("pull")
   .description("Get .env file from 1Password")
   .option("-v, --vault <vault>", "1Password vault name", "Private")
-  .option("-p, --prefix <prefix>", "Item name prefix", "")
+  .option("-s, --suffix <suffix>", "Item name suffix", "")
   .action(async (options) => {
     try {
       await syncEnv("pull", {
         vault: options.vault,
-        itemPrefix: options.prefix,
+        itemSuffix: options.suffix,
       });
     } catch (error) {
       console.error("❌ An error occurred:", error);

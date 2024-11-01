@@ -4,7 +4,7 @@ import path from "path";
 
 interface SyncOptions {
   vault?: string;
-  itemPrefix?: string;
+  itemSuffix?: string;
 }
 
 export async function syncEnv(
@@ -13,8 +13,8 @@ export async function syncEnv(
 ) {
   const vault = options.vault || "Private";
   const rootDir = path.basename(process.cwd());
-  const itemPrefix = options.itemPrefix || "";
-  const item = `${itemPrefix}[${rootDir}] .env`;
+  const itemSuffix = options.itemSuffix || "";
+  const item = `[${rootDir}]${itemSuffix} .env`;
 
   // Check if signed in to 1Password
   try {

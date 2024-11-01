@@ -28,8 +28,8 @@ op-env-sync pull
 # Specify vault (default: "Private")
 op-env-sync push --vault MyVault
 
-# Specify item prefix
-op-env-sync push --prefix "Local-"
+# Specify item suffix
+op-env-sync push --suffix ".local"
 ```
 
 ## Prerequisites
@@ -45,8 +45,8 @@ op-env-sync push --prefix "Local-"
 The .env file will be stored in 1Password with the following format:
 
 - Item Type: Secure Note
-- Item Name: `[current-directory-name] .env`
-  - With prefix option: `prefix[current-directory-name] .env`
+- Item Name: `[current-directory-name].local .env`
+  - With suffix option: `[current-directory-name]<suffix> .env`
 - Field Name: `env`
 
 ## License
