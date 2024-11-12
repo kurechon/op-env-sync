@@ -104,9 +104,10 @@ export async function syncEnv(
 
     // Generate .env.example if option is set
     if (options.generateExample) {
+      const examplePath = path.resolve(process.cwd(), ".env.example.generated");
       const exampleContent = generateExampleContent(envContent);
       await fs.writeFile(examplePath, exampleContent);
-      console.info("✅ Successfully generated .env.example file");
+      console.info("✅ Successfully generated .env.example.generated file");
     }
   } else if (mode === "pull") {
     // Get and save .env from 1Password
@@ -130,9 +131,10 @@ export async function syncEnv(
 
     // Generate .env.example if option is set
     if (options.generateExample) {
+      const examplePath = path.resolve(process.cwd(), ".env.example.generated");
       const exampleContent = generateExampleContent(envContent);
       await fs.writeFile(examplePath, exampleContent);
-      console.info("✅ Successfully generated .env.example file");
+      console.info("✅ Successfully generated .env.example.generated file");
     }
   }
 }
