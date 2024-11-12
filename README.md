@@ -30,6 +30,10 @@ op-env-sync push --vault MyVault
 
 # Specify item suffix
 op-env-sync push --suffix ".local"
+
+# Generate .env.example file with keys only
+op-env-sync push --example
+op-env-sync pull --example
 ```
 
 ## Prerequisites

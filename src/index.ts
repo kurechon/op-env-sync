@@ -5,6 +5,62 @@ import path from "path";
 interface SyncOptions {
   vault?: string;
   itemSuffix?: string;
+  generateExample?: boolean;
+}
+
+function generateExampleContent(envContent: string): string {
+  let isMultilineValue = false;
+  let previousLineWasEmpty = false;
+
+  return envContent
+    .split("\n")
+    .map((line) => {
+      // コメント行はそのまま保持
+      if (line.trim().startsWith("#")) {
+        isMultilineValue = false;
+        previousLineWasEmpty = false;
+        return line;
+      }
+
+      // 空行の処理
+      if (line.trim() === "") {
+        isMultilineValue = false;
+        if (previousLineWasEmpty) {
+          return null; // 連続する空行は削除
+        }
+        previousLineWasEmpty = true;
+        return line;
+      }
+
+      // キーと値を分離
+      const [key, ...valueParts] = line.split("=");
+
+      // マルチライン値の後続行は無視
+      if (isMultilineValue) {
+        return null;
+      }
+
+      previousLineWasEmpty = false;
+
+      // マルチライン値の最初の行
+      if (key && valueParts.length > 0) {
+        const value = valueParts.join("=").trim();
+
+        // 値が引用符で囲まれている場合、マルチライン値と判断
+        if (
+          (value.startsWith('"') && !value.endsWith('"')) ||
+          (value.startsWith("'") && !value.endsWith("'"))
+        ) {
+          isMultilineValue = true;
+        }
+
+        return `${key.trim()}=`;
+      }
+
+      return line;
+    })
+    .filter((line) => line !== null) // nullの行を削除
+    .join("\n");
 }
 
 export async function syncEnv(
@@ -27,6 +83,7 @@ export async function syncEnv(
 
   // Path to .env file
   const envPath = path.resolve(process.cwd(), ".env");
+  const examplePath = path.resolve(process.cwd(), ".env.example");
 
   if (mode === "push") {
     const envContent = await fs.readFile(envPath, "utf-8");
@@ -44,6 +101,13 @@ export async function syncEnv(
       execSync(createCommand);
     }
     console.info("✅ Successfully saved .env file to 1Password");
+
+    // Generate .env.example if option is set
+    if (options.generateExample) {
+      const exampleContent = generateExampleContent(envContent);
+      await fs.writeFile(examplePath, exampleContent);
+      console.info("✅ Successfully generated .env.example file");
+    }
   } else if (mode === "pull") {
     // Get and save .env from 1Password
     const command = `op item get "${item}" --vault "${vault}" --field env`;
@@ -63,5 +127,12 @@ export async function syncEnv(
 
     await fs.writeFile(envPath, envContent);
     console.info("✅ Successfully pulled .env file from 1Password");
+
+    // Generate .env.example if option is set
+    if (options.generateExample) {
+      const exampleContent = generateExampleContent(envContent);
+      await fs.writeFile(examplePath, exampleContent);
+      console.info("✅ Successfully generated .env.example file");
+    }
   }
 }
